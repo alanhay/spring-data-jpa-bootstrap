@@ -1,0 +1,8 @@
+<dataset>
+	<users id="1" forename="Jim" surname="Jones" email_address="jim@jones.net"
+		gender="M" date_of_birth="1970-01-15" version="1" />
+	<users id="2" forename="Jack" surname="Hamilton" email_address="jack@hamilton.net"
+		gender="M" date_of_birth="1976-03-12" version="1" />
+	<users id="3" forename="Jean" surname="Anderson" email_address="jean@anderson.net"
+		gender="F" date_of_birth="1990-08-14" version="1" />
+</dataset>
