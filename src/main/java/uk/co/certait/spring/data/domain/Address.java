@@ -6,19 +6,17 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address {
 
-	@Column(name = "line_one")
+	@Column(name = "address_line_one", nullable = false, length = 40)
 	private String lineOne;
 
-	@Column(name = "line_two")
+	@Column(name = "address_line_two", nullable = true, length = 40)
 	private String lineTwo;
 
+	@Column(name = "town", nullable = false, length = 30)
 	private String town;
 
-	@Column(name = "post_code")
+	@Column(name = "post_code", nullable = false, length = 10)
 	private String postCode;
-
-/*	@Column(name = "address_type")
-	private AddressType addressType;*/
 
 	public String getLineOne() {
 		return lineOne;
@@ -51,12 +49,4 @@ public class Address {
 	public void setPostCode(String postCode) {
 		this.postCode = postCode;
 	}
-
-/*	public AddressType getAddressType() {
-		return addressType;
-	}
-
-	public void setAddressType(AddressType addressType) {
-		this.addressType = addressType;
-	}*/
 }

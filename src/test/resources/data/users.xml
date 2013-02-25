@@ -1,8 +1,25 @@
 <dataset>
 	<users id="1" forename="Jim" surname="Jones" email_address="jim@jones.net"
-		gender="M" date_of_birth="1970-01-15" version="1" />
+		gender="M" date_of_birth="1970-01-15" version="1" address_line_one="address 1"
+		town="Edinburgh" post_code="xx1 1xx" />
+	
 	<users id="2" forename="Jack" surname="Hamilton" email_address="jack@hamilton.net"
-		gender="M" date_of_birth="1976-03-12" version="1" />
+		gender="M" date_of_birth="1976-03-12" version="1" address_line_one="address 1"
+		town="Glasgow" post_code="xx1 1xx" />
+	
 	<users id="3" forename="Jean" surname="Anderson" email_address="jean@anderson.net"
-		gender="F" date_of_birth="1990-08-14" version="1" />
+		gender="F" date_of_birth="1990-08-14" version="1" address_line_one="address 1"
+		town="Glasgow" post_code="xx1 1xx" />
+	
+	<users id="4" forename="Joan" surname="Thomson" email_address="joan@thomson.net"
+		gender="F" date_of_birth="1992-06-14" version="1" address_line_one="address 1"
+		town="Stirling" post_code="xx1 1xx" />
+	
+	<users id="5" forename="John" surname="James" email_address="john@james.net"
+		gender="M" date_of_birth="1976-08-14" version="1" address_line_one="address 1"
+		town="Edinburgh" post_code="xx1 1xx" />
+	
+	<users id="6" forename="Joe" surname="Johnson" email_address="joe@johnson.net"
+		gender="M" date_of_birth="1998-03-14" version="1" address_line_one="address 1"
+		town="Glasgow" post_code="xx1 1xx" />
 </dataset>

@@ -3,6 +3,7 @@ package uk.co.certait.spring.data.domain;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,6 +31,12 @@ public class User extends BaseEntity {
 	@Column(name = "date_of_birth", nullable = true)
 	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
+	
+	@Column
+	private String test;
+
+	@Embedded
+	private Address address;
 
 	public String getForename() {
 		return forename;
@@ -69,6 +76,14 @@ public class User extends BaseEntity {
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public String getName() {
