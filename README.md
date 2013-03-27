@@ -24,5 +24,9 @@ Checkout this project and then run:
 
 5. Maven filters the version attribute in XMl encoding directive <?xml version="1.0" ...> with the version attribute specified for the project so fix these files.
 
-6. Set the database properties as required and run the unit test.
+6. To update QueryDSL generated classes as part of the Eclipse build install the lastest version of the QueryDSL m2e plugin by adding a new update site and intsalling the Eclipse plugin as per the instructions below:
+
+    https://github.com/ilx/m2e-querydsl
+
+7. Set the database properties as required and run the unit test.
 
