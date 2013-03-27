@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import uk.co.certait.spring.data.domain.Address;
 import uk.co.certait.spring.data.domain.Gender;
+import uk.co.certait.spring.data.domain.Role;
 import uk.co.certait.spring.data.domain.User;
 import uk.co.certait.spring.data.domain.specification.UserSpecifications;
 
@@ -26,6 +27,7 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 		Assert.assertEquals("jim@jones.net", user.getEmailAddress());
 		Assert.assertEquals(createDate(15, Calendar.JANUARY, 1970), user.getDateOfBirth());
 		Assert.assertEquals(Gender.M, user.getGender());
+		Assert.assertEquals(1, user.getRoles().size());
 	}
 
 	@Test
@@ -36,20 +38,28 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 		user.setGender(Gender.M);
 		user.setDateOfBirth(createDate(12, Calendar.AUGUST, 1970));
 		user.setEmailAddress("alan@smith.net");
+		user.setPassword("xyz");
+		user.setSalt("abc");
 
 		Address address = new Address();
 		address.setLineOne("Add Line One");
 		address.setTown("Edinburgh");
 		address.setPostCode("EH1 2HG");
 		user.setAddress(address);
+		
+		user.addRole(new Role("role_1"));
+		user.addRole(new Role("role_2"));
 
 		repository.save(user);
+		
+		flushPersistenceContext();
 		clearPersistenceContext();
 
 		user = repository.findOne(user.getId());
 		Assert.assertNotNull(user);
 		Assert.assertEquals("Alan", user.getForename());
 		Assert.assertEquals("Smith", user.getSurname());
+		Assert.assertEquals(2, user.getRoles().size());
 	}
 
 	@Test
@@ -91,6 +101,6 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 
 	@Override
 	public String[] getDataSetPaths() {
-		return new String[] { "/data/users.xml" };
+		return new String[] { "/data/users.xml", "/data/user_roles.xml" };
 	}
 }
