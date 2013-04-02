@@ -38,8 +38,7 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 		user.setGender(Gender.M);
 		user.setDateOfBirth(createDate(12, Calendar.AUGUST, 1970));
 		user.setEmailAddress("alan@smith.net");
-		user.setPassword("xyz");
-		user.setSalt("abc");
+		user.setPassword("12345678");
 
 		Address address = new Address();
 		address.setLineOne("Add Line One");

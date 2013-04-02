@@ -16,8 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -25,29 +31,44 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "users")
 public class User extends BaseEntity implements UserDetails {
 
+	@NotEmpty
+	@Length(min = 2, max = 25)
 	@Column(name = "forename", nullable = false, length = 25)
 	private String forename;
 
+	@NotEmpty
+	@Length(min = 2, max = 30)
 	@Column(name = "surname", nullable = false, length = 30)
 	private String surname;
 
+	@NotEmpty
+	@Length(min = 8, max = 50)
 	@Column(name = "emailAddress", nullable = false, length = 50)
 	private String emailAddress;
 
+	@NotNull
 	@Column(name = "gender", nullable = false, length = 1)
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 
-	@Column(name = "date_of_birth", nullable = true)
+	@NotNull
+	@Past
+	@Column(name = "date_of_birth", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
 
+	@NotEmpty
+	@Length(min=8)
 	@Column(name = "password", nullable = false)
 	private String password;
+	
+	@Transient
+	private String passwordConfirmation;
+	
+	@Column(name = "password_expired", nullable = false)
+	private boolean passwordExpired;
 
-	@Column(name = "salt", nullable = false)
-	private String salt;
-
+	@Valid
 	@Embedded
 	private Address address;
 
@@ -58,6 +79,9 @@ public class User extends BaseEntity implements UserDetails {
 
 	public User() {
 		roles = new HashSet<Role>();
+		gender = Gender.M;
+		
+		dateOfBirth = new Date();
 	}
 
 	public String getForename() {
@@ -108,12 +132,20 @@ public class User extends BaseEntity implements UserDetails {
 		this.password = password;
 	}
 
-	public String getSalt() {
-		return salt;
+	public String getPasswordConfirmation() {
+		return passwordConfirmation;
 	}
 
-	public void setSalt(String salt) {
-		this.salt = salt;
+	public void setPasswordConfirmation(String passwordConfirmation) {
+		this.passwordConfirmation = passwordConfirmation;
+	}
+
+	public boolean isPasswordExpired() {
+		return passwordExpired;
+	}
+
+	public void setPasswordExpired(boolean passwordExpired) {
+		this.passwordExpired = passwordExpired;
 	}
 
 	public Address getAddress() {
