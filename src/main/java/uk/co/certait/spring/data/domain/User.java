@@ -43,7 +43,7 @@ public class User extends BaseEntity implements UserDetails {
 
 	@NotEmpty
 	@Length(min = 8, max = 50)
-	@Column(name = "emailAddress", nullable = false, length = 50)
+	@Column(name = "emailAddress", nullable = false, length = 50, unique = true)
 	private String emailAddress;
 
 	@NotNull
@@ -58,15 +58,19 @@ public class User extends BaseEntity implements UserDetails {
 	private Date dateOfBirth;
 
 	@NotEmpty
-	@Length(min=8)
+	@Length(min = 8)
 	@Column(name = "password", nullable = false)
 	private String password;
-	
+
 	@Transient
 	private String passwordConfirmation;
-	
+
 	@Column(name = "password_expired", nullable = false)
 	private boolean passwordExpired;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "registration_date", nullable = false)
+	public Date registrationDate;
 
 	@Valid
 	@Embedded
@@ -80,7 +84,7 @@ public class User extends BaseEntity implements UserDetails {
 	public User() {
 		roles = new HashSet<Role>();
 		gender = Gender.M;
-		
+
 		dateOfBirth = new Date();
 	}
 
@@ -146,6 +150,14 @@ public class User extends BaseEntity implements UserDetails {
 
 	public void setPasswordExpired(boolean passwordExpired) {
 		this.passwordExpired = passwordExpired;
+	}
+
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 
 	public Address getAddress() {

@@ -28,6 +28,7 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 		Assert.assertEquals(createDate(15, Calendar.JANUARY, 1970), user.getDateOfBirth());
 		Assert.assertEquals(Gender.M, user.getGender());
 		Assert.assertEquals(1, user.getRoles().size());
+		Assert.assertEquals(createDate(9, Calendar.JANUARY, 2013), user.getRegistrationDate());
 	}
 
 	@Test
@@ -45,6 +46,7 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 		address.setTown("Edinburgh");
 		address.setPostCode("EH1 2HG");
 		user.setAddress(address);
+		user.setRegistrationDate(createDate(15, Calendar.APRIL, 2013));
 		
 		user.addRole(new Role("role_1"));
 		user.addRole(new Role("role_2"));
