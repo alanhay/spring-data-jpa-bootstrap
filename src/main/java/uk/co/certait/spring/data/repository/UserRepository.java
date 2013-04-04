@@ -12,8 +12,8 @@ import com.mysema.query.types.Predicate;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long>, QueryDslPredicateExecutor<User> {
-
-	public User findByEmailAddress(String emailAddress);
+	
+	public User findOne(Predicate predicate);
 
 	public List<User> findAll(Predicate predicate);
 }

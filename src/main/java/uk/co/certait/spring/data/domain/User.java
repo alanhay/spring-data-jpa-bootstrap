@@ -11,7 +11,6 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -45,6 +44,11 @@ public class User extends BaseEntity implements UserDetails {
 	@Length(min = 8, max = 50)
 	@Column(name = "emailAddress", nullable = false, length = 50, unique = true)
 	private String emailAddress;
+	
+	@NotEmpty
+	@Length(min = 10, max = 15)
+	@Column(name = "phone_number", nullable = false, length=15)
+	private String phoneNumber;
 
 	@NotNull
 	@Column(name = "gender", nullable = false, length = 1)
@@ -71,12 +75,15 @@ public class User extends BaseEntity implements UserDetails {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "registration_date", nullable = false)
 	public Date registrationDate;
+	
+	@Column(name = "deleted", nullable = false)
+	private boolean deleted;
 
 	@Valid
 	@Embedded
 	private Address address;
 
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection
 	@CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
 			"user_id", "name" }))
 	private Set<Role> roles;
@@ -110,6 +117,14 @@ public class User extends BaseEntity implements UserDetails {
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public Gender getGender() {
@@ -160,6 +175,14 @@ public class User extends BaseEntity implements UserDetails {
 		this.registrationDate = registrationDate;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public Address getAddress() {
 		return address;
 	}
@@ -181,7 +204,7 @@ public class User extends BaseEntity implements UserDetails {
 	}
 
 	public String getName() {
-		return forename + surname;
+		return forename + " " + surname;
 	}
 
 	public String getNameReversed() {
@@ -195,7 +218,7 @@ public class User extends BaseEntity implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return null;
+		return emailAddress;
 	}
 
 	@Override

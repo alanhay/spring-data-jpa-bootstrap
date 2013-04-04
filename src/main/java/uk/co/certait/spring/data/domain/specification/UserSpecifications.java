@@ -14,4 +14,12 @@ public class UserSpecifications {
 	public static BooleanExpression userLivesInCity(String city) {
 		return QUser.user.address.town.eq(city);
 	}
+	
+	public static BooleanExpression userHasEmailAddress(String emailAddress){
+		return emailAddress == null ? QUser.user.emailAddress.isNull() : QUser.user.emailAddress.eq(emailAddress);
+	}
+	
+	public static BooleanExpression userIsActive(){
+		return QUser.user.deleted.eq(false);
+	}
 }

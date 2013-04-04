@@ -40,6 +40,7 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 		user.setDateOfBirth(createDate(12, Calendar.AUGUST, 1970));
 		user.setEmailAddress("alan@smith.net");
 		user.setPassword("12345678");
+		user.setPhoneNumber("013146654321");
 
 		Address address = new Address();
 		address.setLineOne("Add Line One");
@@ -65,7 +66,7 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 
 	@Test
 	public void testFindByEmailAddress() {
-		User user = repository.findByEmailAddress("jack@hamilton.net");
+		User user = repository.findOne(UserSpecifications.userHasEmailAddress("jack@hamilton.net"));
 		Assert.assertNotNull(user);
 		Assert.assertEquals("Jack", user.getForename());
 		Assert.assertEquals("Hamilton", user.getSurname());
