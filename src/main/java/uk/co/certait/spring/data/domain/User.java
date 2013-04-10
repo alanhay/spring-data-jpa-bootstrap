@@ -44,10 +44,10 @@ public class User extends BaseEntity implements UserDetails {
 	@Length(min = 8, max = 50)
 	@Column(name = "emailAddress", nullable = false, length = 50, unique = true)
 	private String emailAddress;
-	
+
 	@NotEmpty
 	@Length(min = 10, max = 15)
-	@Column(name = "phone_number", nullable = false, length=15)
+	@Column(name = "phone_number", nullable = false, length = 15)
 	private String phoneNumber;
 
 	@NotNull
@@ -71,11 +71,11 @@ public class User extends BaseEntity implements UserDetails {
 
 	@Column(name = "password_expired", nullable = false)
 	private boolean passwordExpired;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "registration_date", nullable = false)
 	public Date registrationDate;
-	
+
 	@Column(name = "deleted", nullable = false)
 	private boolean deleted;
 
@@ -124,7 +124,7 @@ public class User extends BaseEntity implements UserDetails {
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+		this.phoneNumber = phoneNumber != null ? phoneNumber.replaceAll(" ", "") : null;
 	}
 
 	public Gender getGender() {
