@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.hibernate.annotations.Index;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,7 +29,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity implements UserDetails, PasswordDetails {
 
 	@NotEmpty
 	@Length(min = 2, max = 25)
@@ -38,11 +39,13 @@ public class User extends BaseEntity implements UserDetails {
 	@NotEmpty
 	@Length(min = 2, max = 30)
 	@Column(name = "surname", nullable = false, length = 30)
+	@Index(name = "user_surname_index") 
 	private String surname;
 
 	@NotEmpty
 	@Length(min = 8, max = 50)
 	@Column(name = "emailAddress", nullable = false, length = 50, unique = true)
+	@Index(name = "user_email_address_index")
 	private String emailAddress;
 
 	@NotEmpty

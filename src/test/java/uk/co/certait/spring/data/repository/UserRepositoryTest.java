@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import uk.co.certait.spring.data.domain.Address;
 import uk.co.certait.spring.data.domain.Gender;
+import uk.co.certait.spring.data.domain.QUser;
 import uk.co.certait.spring.data.domain.Role;
 import uk.co.certait.spring.data.domain.User;
-import uk.co.certait.spring.data.domain.specification.UserSpecifications;
 
 public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 
@@ -48,12 +48,12 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 		address.setPostCode("EH1 2HG");
 		user.setAddress(address);
 		user.setRegistrationDate(createDate(15, Calendar.APRIL, 2013));
-		
+
 		user.addRole(new Role("role_1"));
 		user.addRole(new Role("role_2"));
 
 		repository.save(user);
-		
+
 		flushPersistenceContext();
 		clearPersistenceContext();
 
@@ -66,7 +66,7 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 
 	@Test
 	public void testFindByEmailAddress() {
-		User user = repository.findOne(UserSpecifications.userHasEmailAddress("jack@hamilton.net"));
+		User user = repository.findOne(QUser.user.emailAddress.eq("jack@hamilton.net"));
 		Assert.assertNotNull(user);
 		Assert.assertEquals("Jack", user.getForename());
 		Assert.assertEquals("Hamilton", user.getSurname());
@@ -74,30 +74,29 @@ public class UserRepositoryTest extends AbstractBaseDatabaseTest {
 
 	@Test
 	public void testFindByGender() {
-		List<User> users = repository.findAll(UserSpecifications.userHasGender(Gender.M));
+		List<User> users = repository.findAll(QUser.user.gender.eq(Gender.M));
 		Assert.assertEquals(4, users.size());
 
-		users = repository.findAll(UserSpecifications.userHasGender(Gender.F));
+		users = repository.findAll(QUser.user.gender.eq(Gender.F));
 		Assert.assertEquals(2, users.size());
 	}
 
 	@Test
 	public void testFindByCity() {
 
-		List<User> users = repository.findAll(UserSpecifications.userLivesInCity("Edinburgh"));
+		List<User> users = repository.findAll(QUser.user.address.town.eq("Edinburgh"));
 		Assert.assertEquals(2, users.size());
 
-		users = repository.findAll(UserSpecifications.userLivesInCity("Stirling"));
+		users = repository.findAll(QUser.user.address.town.eq("Stirling"));
 		Assert.assertEquals(1, users.size());
 	}
 
 	@Test
 	public void testFindByGenderAndCity() {
-		List<User> users = repository.findAll(UserSpecifications.userLivesInCity("Glasgow")
-				.and(UserSpecifications.userHasGender(Gender.M)));
+		List<User> users = repository.findAll(QUser.user.address.town.eq("Glasgow").and(QUser.user.gender.eq(Gender.M)));
 		Assert.assertEquals(2, users.size());
 
-		users = repository.findAll(UserSpecifications.userLivesInCity("Glasgow").and(UserSpecifications.userHasGender(Gender.F)));
+		users = repository.findAll(QUser.user.address.town.eq("Glasgow").and(QUser.user.gender.eq(Gender.F)));
 		Assert.assertEquals(1, users.size());
 	}
 

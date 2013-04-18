@@ -3,6 +3,7 @@ package uk.co.certait.spring.data.domain;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.hibernate.annotations.Index;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -20,6 +21,7 @@ public class Address {
 	@NotEmpty
 	@Length(min = 2, max = 30)
 	@Column(name = "town", nullable = false, length = 30)
+	@Index(name="user_town_index")
 	private String town;
 
 	@NotEmpty
