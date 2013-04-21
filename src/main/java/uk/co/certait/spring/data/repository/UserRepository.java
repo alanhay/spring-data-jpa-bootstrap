@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 import uk.co.certait.spring.data.domain.User;
 
@@ -15,7 +14,6 @@ import com.mysema.query.types.Predicate;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Long>, QueryDslPredicateExecutor<User> {
 
-	@Transactional(readOnly = true)
 	public User findOne(Predicate predicate);
 
 	public List<User> findAll(Predicate predicate);
@@ -27,8 +25,4 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long>, 
 
 	@Query("select distinct u.address.town from User u where deleted = 0 and u.address.town like  ?1 order by u.address.town")
 	public List<String> findUniqueUserLocations(String term, Pageable pageable);
-
-	@Transactional(readOnly = true)
-	@Query("select count(*) from User u where u.emailAddress = ?1 and u.id <> ?2")
-	public long checkEmailAddressUnique(String emailAddress, Long userId);
 }
