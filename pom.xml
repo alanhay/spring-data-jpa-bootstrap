@@ -8,7 +8,7 @@
 		<groupId>uk.co.certait</groupId>
 		<artifactId>spring-combined-bootstrap</artifactId>
 		<version>1.0</version>
-		<relativePath></relativePath>
+		<relativePath/>
 	</parent>
 
 	<properties>
